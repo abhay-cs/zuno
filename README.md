@@ -1,6 +1,6 @@
-# Tasky
+# Zuno
 
-Tasky is a full-stack task management application that allows users to sign up, log in, and manage their to-do tasks. Each user has their own task list, protected by authentication. The app provides a simple and responsive interface built with React and a secure backend powered by Express and MongoDB.
+Zuno is a full-stack task management application that allows users to sign up, log in, and manage their to-do tasks. Each user has their own task list, protected by authentication. The app provides a simple and responsive interface built with React and a secure backend powered by Express and MongoDB.
 
 ## Features
 
@@ -42,7 +42,7 @@ Tasky is a full-stack task management application that allows users to sign up, 
 
 #### In your terminal
 ```bash
-git clone https://github.com/your-username/tasky.git
+git clone https://github.com/your-username/zuno.git
 cd tasky
 cd server
 npm install
