@@ -1,90 +1,43 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import TaskForm from './components/TaskForm'
-import TaskItem from './components/TaskItem'
-import { getTasks, createTask, deleteTask, updateTask } from './api/api'
+import { useState, useEffect } from 'react';
 import AuthPage from './pages/AuthPage';
-// import TaskPage from './pages/TaskList';
-
+import TaskList from './pages/TaskList';
+import './App.css';
+import TaskyLanding from './pages/TaskyLanding';
 function App() {
-	const [tasks, setTasks] = useState([]);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+	const [page, setPage] = useState('landing');
 	useEffect(() => {
 		const token = localStorage.getItem('token');
-		console.log('📦 token in App.jsx:', token);
-		setIsAuthenticated(!!token);
+		if(token){
+			setIsAuthenticated(!!token);
+			setPage('tasks')
+		}
+
 	}, []);
 
-	useEffect(() => {
-		if (!isAuthenticated) return;
-
-		console.log('📡 About to fetch tasks');
-
-		getTasks()
-			.then((res) => {
-				console.log('✅ Tasks fetched:', res.data);
-				setTasks(res.data);
-			})
-			.catch((err) => {
-				console.error("❌ Error fetching tasks:", err.response?.status, err.message);
-				console.log('🧵 Full error:', err);
-				setIsAuthenticated(false);
-				localStorage.removeItem('token');
-			});
-	}, [isAuthenticated]);
-
-	const handleAuth = () => setIsAuthenticated(true);
-
-	const handleAddTask = async (text) => {
-		const res = await createTask(text);
-		setTasks((prev) => [res.data, ...prev]);
-	};
-
-	const handleDeleteTask = async (taskId) => {
-		// this is filtering out tasks based on id, rejecting the one that matches 
-		await deleteTask(taskId);
-		setTasks((prev) => prev.filter((task) => task._id !== taskId));
+	const handleAuth = () => {
+		setIsAuthenticated(true);
+		setPage('tasks');
 	}
 
-	const handleEditTask = async (taskId, newText) => {
-		const res = await updateTask(taskId, { text: newText });
-		//fancy logic
-		setTasks((prev) =>
-			prev.map((task) =>
-				task._id === taskId ? { ...task, text: res.data.text } : task
-			)
+	const handleLogout = () => {
+		setIsAuthenticated(false);
+		setPage('landing')
+	}
+
+	if (page == 'landing'){
+		return (
+			<TaskyLanding
+				onLogin={()=> setPage('auth')}
+				onSignup={()=> setPage('auth')}
+			/>
 		);
 	}
 	if (!isAuthenticated) {
 		return <AuthPage onAuth={handleAuth} />;
 	}
 
-	return (
-		<div>
-			<div className='heading'>Tasky</div>
-			<TaskForm onAdd={handleAddTask} />
-			<ul>
-				{tasks.map((task) => (
-					<TaskItem
-						key={task._id}
-						task={task}
-						onDelete={handleDeleteTask}
-						onEdit={handleEditTask}
-					/>
-				))}
-			</ul>
-			<button
-				onClick={() => {
-					localStorage.removeItem('token');
-					setIsAuthenticated(false);
-					setTasks([]);
-				}}
-			>
-				Logout
-			</button>
-		</div>
-	);
+	return <TaskList onLogout={handleLogout} />;
 }
 
-export default App
+export default App;
