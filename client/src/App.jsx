@@ -1,43 +1,55 @@
-import { useState, useEffect } from 'react';
-import AuthPage from './pages/AuthPage';
-import TaskList from './pages/TaskList';
-import './App.css';
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
 import TaskyLanding from './pages/TaskyLanding';
+import Auth from './pages/AuthPage';
+import TaskList from './pages/TaskList';
+
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [page, setPage] = useState('landing');
+
 	useEffect(() => {
 		const token = localStorage.getItem('token');
-		if(token){
-			setIsAuthenticated(!!token);
-			setPage('tasks')
+		if (token) {
+			setIsAuthenticated(true);
 		}
-
 	}, []);
 
 	const handleAuth = () => {
 		setIsAuthenticated(true);
-		setPage('tasks');
-	}
+	};
 
 	const handleLogout = () => {
 		setIsAuthenticated(false);
-		setPage('landing')
-	}
+		localStorage.removeItem('token');
+	};
 
-	if (page == 'landing'){
-		return (
-			<TaskyLanding
-				onLogin={()=> setPage('auth')}
-				onSignup={()=> setPage('auth')}
-			/>
-		);
-	}
-	if (!isAuthenticated) {
-		return <AuthPage onAuth={handleAuth} />;
-	}
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<TaskyLanding />} />
 
-	return <TaskList onLogout={handleLogout} />;
+				<Route
+					path="/auth/*"
+					element={
+						isAuthenticated ? <Navigate to="/tasks" replace /> : <Auth onAuth={handleAuth} />
+					}
+				/>
+				<Route
+					path="/tasks"
+					element={
+						isAuthenticated ? (
+							<TaskList onLogout={handleLogout} />
+						) : (
+							<Navigate to="/auth/login" replace />
+						)
+					}
+				/>
+				{/* Catch-all route to redirect unknown paths */}
+				<Route path="*" element={<Navigate to="/" replace />} />
+			</Routes>
+		</BrowserRouter>
+	);
 }
 
 export default App;

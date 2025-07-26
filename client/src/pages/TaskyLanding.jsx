@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Check, Users, Zap, Shield, ArrowRight, Menu, X, Star, Play, CheckCircle, Clock, Target } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo_2.png';
 const TaskyLanding = ({ onLogin, onSignup }) => {
+    const navigate = useNavigate();
+
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeFeature, setActiveFeature] = useState(0);
     const [isVisible, setIsVisible] = useState({});
@@ -81,7 +84,7 @@ const TaskyLanding = ({ onLogin, onSignup }) => {
                         {/* Desktop Menu */}
                         <div className="hidden md:flex items-center space-x-8 flex-shrink-0">
                             {/* <button className="text-[#1E4C3F] px-6 py-2 rounded-lg hover:bg-[#266E4B] hover:text-[#97DBB1] transition-all transform hover:scale-105 shadow-lg hover:shadow-xl font-medium" onClick={onLogin}>Login</button> */}
-                            <button className="bg-[#95D9AB] text-[#1E4C3F] px-6 py-2 rounded-lg hover:bg-[#266E4B] hover:text-[#97DBB1] transition-all transform hover:scale-105 shadow-lg hover:shadow-xl font-medium" onClick={onSignup}>
+                            <button className="bg-[#95D9AB] text-[#1E4C3F] px-6 py-2 rounded-lg hover:bg-[#266E4B] hover:text-[#97DBB1] transition-all transform hover:scale-105 shadow-lg hover:shadow-xl font-medium" onClick={() => navigate('/auth/login')}>
                                 Start Now
                             </button>
                         </div>
@@ -205,7 +208,7 @@ const TaskyLanding = ({ onLogin, onSignup }) => {
                     </div>
 
                     {/* Feature Grid */}
-                    
+
                     <div className='mt-10 pt-10 pb-20 px-4 bg-gradient-to-br from-[#98DCB0] via-[#76C19D] to-[#194C3E] to-[#76C19D] '>
 
                         <div className="grid md:grid-cols-2 gap-12 mt-20">
@@ -229,14 +232,13 @@ const TaskyLanding = ({ onLogin, onSignup }) => {
                                     </div>
                                 </div>
                             </div>
-                            <h2 className="text-5xl lg:text-6xl font-bold leading-tight mb-6 pt-6">
-                                <span className='bg-gradient-to-r from-[#C7EDD8] to-[#98DCB0] bg-clip-text text-transparent block pt-8 pl-50'>
-                                    All-in-one 
-                                    
+                            <h2 className="text-4xl lg:text-4xl font-bold leading-tight">
+                                <span className='bg-gradient-to-r from-[#C7EDD8] to-[#98DCB0] bg-clip-text text-transparent block pt-8 mt-7'>
+                                    All-in-one,task platform
+
                                 </span>
-                                <span className='bg-gradient-to-r from-[#C7EDD8] to-[#98DCB0] bg-clip-text text-transparent block pl-30'>task platform</span>
                             </h2>
-                           
+
                         </div>
                     </div>
                 </div>
