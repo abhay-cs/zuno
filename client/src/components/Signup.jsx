@@ -3,8 +3,7 @@ import axios from 'axios';
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Check, X, CheckCircle, AlertCircle } from 'lucide-react';
 import logo from "../assets/logo_2.png"
 
-const API_BASE = 'http://localhost:4000/api/auth';
-
+const API_BASE = `${process.env.REACT_APP_API_URL}/auth`;
 function SignupForm({ onSuccess }) {
 
 	const [formData, setFormData] = useState({

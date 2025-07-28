@@ -2,8 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Check, X, AlertCircle } from 'lucide-react';
 import logo from "../assets/logo_2.png"
-const API_BASE = 'http://localhost:4000/api/auth';
-
+const API_BASE = `${process.env.REACT_APP_API_URL}/auth`;
 function LoginForm({ onSuccess }) {
 	const [formData, setFormData] = useState({ email: '', password: '' });
 	const [showPassword, setShowPassword] = useState(false);
@@ -220,11 +219,11 @@ function LoginForm({ onSuccess }) {
 						</p>
 						
 					</div> */}
-					
+
 				</form>
-							
+
 			</div>
-			
+
 		</div>
 	);
 }
