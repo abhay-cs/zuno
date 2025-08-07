@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE = `${process.env.REACT_APP_API_URL}/tasks`;
+const API_BASE = `${import.meta.env.VITE_API_URL}/tasks`;
 export const getTasks = () => {
     const token = localStorage.getItem('token');
     console.log('🔑 Token being sent:', token);

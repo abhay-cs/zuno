@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Check, X, AlertCircle } from 'lucide-react';
 import logo from "../assets/logo_2.png"
-const API_BASE = `${process.env.REACT_APP_API_URL}/auth`;
+const API_BASE = `${import.meta.env.VITE_API_URL}/auth`;
 function LoginForm({ onSuccess }) {
 	const [formData, setFormData] = useState({ email: '', password: '' });
 	const [showPassword, setShowPassword] = useState(false);
@@ -204,21 +204,6 @@ function LoginForm({ onSuccess }) {
 						)}
 					</div>
 
-					{/* Divider */}
-					{/* <div className="my-6 flex items-center">
-						<div className="flex-1 border-t border-gray-300"></div>
-						<span className="px-4 text-sm text-gray-500">or</span>
-						<div className="flex-1 border-t border-gray-300"></div>
-					</div> */}
-					{/* <div>
-						<p className="">
-							Don’t have an account?{' '}
-							<Link to="/auth/signup" className="text-[#20704B] hover:underline font-medium">
-								Sign up
-							</Link>
-						</p>
-						
-					</div> */}
 
 				</form>
 
