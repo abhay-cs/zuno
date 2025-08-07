@@ -9,10 +9,15 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // Middleware
-app.use(cors());
+
+app.use(cors({
+  origin: ['https://zuno-zr11.vercel.app'], // allow your frontend
+  credentials: true, // allow cookies, sessions, auth headers
+}));
+// app.options('*', cors());
 app.use(express.json());
 
-app.options('*', cors());
+
 
 
 // Connect to MongoDB
